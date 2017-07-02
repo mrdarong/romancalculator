@@ -27,18 +27,6 @@ public class CalculatorController {
     @Autowired
     RomanCalculator romanCalculator;
     
-    @RequestMapping(method = RequestMethod.GET, value = "/romansum")
-    public String romansum(@RequestParam("input1") String input1, @RequestParam("input2") String input2) throws Exception {
-        String output = romanCalculator.sum(input1,input2);
-        return output;
-    }
-    
-    @RequestMapping(method = RequestMethod.POST, value = "/uploadText")
-    public String uploadTabplan(@RequestParam("file") MultipartFile file) throws Exception {
-        String output = romanCalculator.sum(file.getInputStream());
-        return output;
-    }
-    
     @PostMapping("/upload")
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) throws IOException {
