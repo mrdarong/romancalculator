@@ -5,11 +5,16 @@
  */
 package th.co.cigna.roman.calculator.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -30,6 +35,24 @@ public class RomanCalculator {
         String rForm = reduceForm(output);
         String tForm = transformToTwoCharForm(rForm);
         return tForm;
+    }
+    
+    public String sum(InputStream inputStream) throws IOException{
+        StringWriter writer = new StringWriter();
+        IOUtils.copy(inputStream, writer, "UTF-8");
+        String inputText = writer.toString();
+        String[] inputArr =inputText.split("\r\n");
+        String output = "";
+        for(String input : inputArr){
+            String[] inputAll =input.split("\\+");
+            if(!"".equals(output)){
+                output += ",";
+            }
+            if(inputAll.length == 2){
+                output += sum(inputAll[0],inputAll[1]);
+            }
+        }
+        return output;
     }
     
     private String transformToFourCharForm(String romanInput){

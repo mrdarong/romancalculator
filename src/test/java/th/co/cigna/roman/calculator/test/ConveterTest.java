@@ -5,6 +5,10 @@
  */
 package th.co.cigna.roman.calculator.test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -59,6 +63,13 @@ public class ConveterTest {
     public void should_sum5(){
         String output = romanCalculator.sum("IV","V");
         log.info("output5:"+output);
+    }
+    
+    @Test
+    public void should_file() throws IOException{
+        InputStream targetStream = getClass().getClassLoader().getResourceAsStream("test/test.txt");
+        String output = romanCalculator.sum(targetStream);
+        log.info("file:"+output);
     }
     
 }
